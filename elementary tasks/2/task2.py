@@ -24,8 +24,6 @@ class Envelope2:
     #     else:
     #         return False
 
-# class Workflow:
-
 
 def main():
 

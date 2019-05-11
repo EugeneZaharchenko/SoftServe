@@ -1,39 +1,48 @@
 import sys
 
 
+class Fibonacci:
+    def __init__(self, start=0, stop=1):
+        if stop > start:
+            self.start = int(start)
+            self.stop = int(stop)
+            self.fib_seq = []
+        else:
+            raise ValueError
+
+    def fib(self, n):
+        phi = ((1 + (5 ** (1 / 2))) / 2)
+        return str(round((phi ** n) / (5 ** (1 / 2))))
+
+    def sequence(self):
+        for n in range(self.start, self.stop + 1):
+            self.fib_seq.append(self.fib(n))
+
+    def __str__(self):
+        self.sequence()
+        return "Fibonacci sequence for a given range {start}-{stop} is: {seq}".format(start=self.stop, stop=self.stop,
+                                                                                      seq=', '.join(self.fib_seq))
+
+
 def main():
-    class Fibonacci:
-        def __init__(self):
-            self.i = 0
-            self.x = 0
-            self.y = 1
-            self.F = [self.x, self.y]
 
-        def next(self):
-            self.i += 1
-            return self.F[self.i - 1]  # return next # from list F
+    instructions = """
+Программа выводит все числа Фибоначчи, которые находятся
+в указанном диапазоне.
+Задайте числовой диапазон, для которого нужно вывести последовательность Фибоначчи.
+"""
 
-        def calculate(self, n):
-            # use previously computed fibonachi numbers stored in list F
-            l = len(self.F)
-            x = self.F[l - 2]
-            y = self.F[l - 1]
-            newn = n - l
-            # calculate new numbers if it does not exist in list
-            for i in range(newn + 1):
-                x, y = y, x + y
-                self.F.append(y)
-            return self.F[n]  # return nth # in Fibonacci series
+    if len(sys.argv[:]) == 1:
+        print(instructions)
 
-        # def writeToFile(self, n, filename):
-        #     filehandle = open(filename, 'a')  # append to file
-        #     self.calculate(n)
-        #     for j in range(n):
-        #         filehandle.write(str(self.F[j]) + '\n')
-        #     filehandle.close()
-
-
-print()
+    try:
+        fib = Fibonacci(sys.argv[1], sys.argv[2])
+        print(fib)
+        exit()
+    except ValueError:
+        print("Wrong arguments. Give start and stop values where stop is bigger (start < stop)")
+    except IndexError:
+        print("Wrong arguments. Must be 2 parameters: start, stop (start < stop)")
 
 
 if __name__ == "__main__":

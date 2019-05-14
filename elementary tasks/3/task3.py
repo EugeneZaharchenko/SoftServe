@@ -1,3 +1,33 @@
+"""
+Elementary Task #3
+
+Сортировка треугольников
+----------------
+
+Программа выполняет вывод треугольников в порядке убывания
+их площади.
+• Расчёт площади треугольника производится по формуле Герона.
+• Каждый треугольник определяется именем и длинами его сторон.
+Формат ввода (разделитель - запятая):
+    <имя>, <длина стороны>, <длина стороны>, <длина стороны>
+• Приложение должно обрабатывать ввод чисел с плавающей точкой.
+• Ввод должен быть нечувствителен к регистру, пробелам, табам.
+•	Вывод данных должен быть следующем примере:
+============= Triangles list: ===============
+1. [Triangle first]: 17.23 сm
+2. [Triangle 22]: 13 cm
+3. [Triangle 1]: 1.5 cm
+
+После добавления каждого нового треугольника программа спрашивает, хочет ли
+пользователь добавить ещё один. Если пользователь ответит “y” или “yes” (без учёта регистра),
+программа попросит ввести данные для ещё одного треугольника, в противном случае – выводит
+результат в консоль.
+
+"""
+# удаление пробелов про вводе с пом. str.replace
+import sys
+
+
 class Triangle:
     def __init__(self, name, side_a, side_b, side_c):
         """
@@ -8,10 +38,14 @@ class Triangle:
             side_a, side_b, side_c (float): The triangle sides.
         """
         self.name = name.strip('\t').strip(' ').lower().title()
-        self.side_a = float(side_a.strip('\t').strip(' '))
-        self.side_b = float(side_b.strip('\t').strip(' '))
-        self.side_c = float(side_c.strip('\t').strip(' '))
-        self.sides = [self.side_a, self.side_b, self.side_c]
+        self.sides = [float(s.strip('\t').strip(' ')) for s in [side_a, side_b, side_c]]
+        if not (side_a + side_b <= side_c) or (side_a + side_c <= side_b) or (side_b + side_c <= side_a):
+            self.side_a = side_a
+            self.side_b = side_b
+            self.side_c = side_c
+        else:
+            print("Such a trianle can't exist")
+
         self._area = 0
 
     @property
@@ -35,31 +69,26 @@ class Triangle:
         return self._area
 
     def __lt__(self, other):
-        self.area < other._area
+        return self.area < other.area
 
     def __gt__(self, other):
-        self.area > other._area
+        return self.area > other.area
 
     def __str__(self):
         return '{name}: {area:g} cm'.format(name=self.name, area=self.area)
 
     def __repr__(self):
-        return self._area
+        return self.area
 
 
 def main():
-    """
-    Программа выводит треугольники в порядке убывания их площади.
-    Введите данные о треугольнике: имя, длина каждой из сторон.
-    """
-    # instructions =
 
-    # После подсчета, если хотите продолжить работу программы сначала - введите y или yes
+    if len(sys.argv) == 1:
+        print(__doc__)
 
     triange_list = []
-    repeat = True
 
-    while repeat:
+    while True:
         try:
             data = input('Введите имя, сторону1, сторону2, сторону3: ').strip().split(',')
             if not data[0].isalpha:
@@ -76,12 +105,12 @@ def main():
         finally:
             repeat = input('Хотите продолжить? (y/n): ')
             repeat.lower().strip()
-            if ('y' or 'yes') not in repeat:
-
-                repeat = False
+            if repeat not in ('y' or 'yes'):
+                break
 
     print('Triangles list'.center(43, '='))
-    for triangle in sorted(triange_list):
+    triange_list.sort()
+    for triangle in triange_list:
         print(triangle)
 
 

@@ -1,3 +1,13 @@
+"""
+Elementary Task #7
+
+Числовая последовательность
+----------------
+
+Программа выводит ряд натуральных чисел через запятую, квадрат которых меньше заданного n.
+Программа запускается через вызов главного класса с параметрами.
+"""
+
 import sys
 
 
@@ -13,7 +23,6 @@ class Number:
         # else:
         #     self.limit = int(limit)
         #     self.numbers_list = []
-# def main():
 #     num = int(input('Введите заданное граничное число: '))
 
     def count_limit(self):
@@ -21,20 +30,17 @@ class Number:
 
     def __str__(self):
         self.count_limit()
-        return "Sequence of numbers whos pow of 2 is less the {lim} is: {seq}".format(lim=self.limit,
+        return "Sequence of numbers whose pow of 2 is less the {lim} is: {seq}".format(lim=self.limit,
                                                                                       seq=', '.join(self.numbers_list))
 
 
 def main():
-    instructions = """
-Программа выводит ряд натуральных чисел через запятую, квадрат которых
-меньше заданного диапазона.
-    """
 
     if len(sys.argv[:]) == 1:
-        print(instructions)
+        print(__doc__)
 
     try:
+        # creating instance of Number class with given arguments
         num = Number(sys.argv[1])
         print(num)
         exit()

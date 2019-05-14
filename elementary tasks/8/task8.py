@@ -1,3 +1,14 @@
+"""
+Elementary Task #8
+
+Ряд Фибоначчи для диапазона
+----------------
+
+Программа позволяет вывести все числа Фибоначчи, которые находятся в указанном диапазоне.
+Диапазон задаётся двумя аргументами при вызове главного класса.
+Числа выводятся через запятую по возрастанию.
+"""
+
 import sys
 
 
@@ -26,16 +37,11 @@ class Fibonacci:
 
 def main():
 
-    instructions = """
-Программа выводит все числа Фибоначчи, которые находятся
-в указанном диапазоне.
-Задайте числовой диапазон, для которого нужно вывести последовательность Фибоначчи.
-"""
-
-    if len(sys.argv[:]) == 1:
-        print(instructions)
+    if len(sys.argv) == 1:
+        print(__doc__)
 
     try:
+        # creating instance of Fibonacci class in certain range which is given as arguments
         fib = Fibonacci(sys.argv[1], sys.argv[2])
         print(fib)
         exit()

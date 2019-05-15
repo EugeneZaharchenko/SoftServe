@@ -15,7 +15,7 @@ import sys
 
 class Fibonacci:
     def __init__(self, start, stop):
-        if stop > start:
+        if (int(stop) > int(start)):
             self.start = int(start)
             self.stop = int(stop)
             self.fib_seq = []

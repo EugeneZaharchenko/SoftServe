@@ -34,11 +34,11 @@ class Number:
             self.limit = int(val)
 
     def count_limit(self):
-        if self.limit == 0:
-            return []
-        else:
-            self.numbers_list = [str(n) for n in range(self.limit) if n ** 2 < self.limit]
-            return self.numbers_list
+        # if self.limit == 0:
+        #     return []
+        # else:
+        self.numbers_list = [str(n) for n in range(self.limit) if n ** 2 < self.limit]
+        return self.numbers_list
 
     def __str__(self):
         final_list = self.count_limit()

@@ -7,15 +7,15 @@ Elementary Task #4
 Программа имеет два режима:
 1. Считать количество вхождений строки в текстовом файле.
 2. Делать замену строки на другую в указанном файле
+
 Программа должна принимать аргументы на вход при запуске:
 <путь к файлу> <строка для подсчёта>
 <путь к файлу> <строка для поиска> <строка для замены>
 
 """
-
+import tempfile
 # to handle input
 import sys
-import re
 # module to check if the file exists
 import os.path
 
@@ -31,33 +31,29 @@ class FindReplace:
             raise AttributeError
 
     # check if the file exists
-    def file_existence(self, path):
+    @staticmethod
+    def file_existence(path):
         if os.path.isfile(path):
             return path
-        else:
-            raise IOError
+        raise IOError
 
     def count(self, find):
-        with open(self.path, 'r+', encoding='utf-8') as file:
+        _count = 0
+        _find = find.lower()
+        with open(self.path) as file:
             for line in file:
-                line.rstrip('\n').lower()
-                if find in line:
-                    self._count += len(re.findall(find, line))
-                else:
-                    continue
-        return self._count
+                _count += line.lower().count(_find)
+        return _count
 
     def replace(self, find, rep):
-        with open(self.path, 'w+') as file:
-            lines = file.readlines()
-
-            for line in lines:
-                if find in line.strip():
-                    # str_find = self.str_find
-                    newline = re.sub(find, rep, line)
-                    file.write(newline)
-                else:
-                    continue
+        with open(self.path) as file:
+            with tempfile.NamedTemporaryFile("w", delete=False) as tmp:
+                for line in file:
+                    tmp.write(line.replace(find, rep))
+                tmp_name = tmp.name
+        if tmp_name:
+            os.remove(self.path)
+            os.rename(tmp_name, self.path)
 
     def __str__(self):
         count = self.count(sys.argv[2])
@@ -66,13 +62,11 @@ class FindReplace:
             return "String {str_find} in given file was found {count} times.\n" \
                    "Requested string was replaced for {rep}.".format(str_find=self.str_find, count=count,
                                                                      rep=self.str_replace)
-        else:
-            return "String {str_find} in given file was found {count} times.".format(str_find=self.str_find,
-                                                                                     count=count)
+        return "String {str_find} in given file was found {count} times.".format(str_find=self.str_find,
+                                                                                 count=count)
 
 
 def main():
-
     if len(sys.argv) == 1:
         print(__doc__)
     elif len(sys.argv) < 3:

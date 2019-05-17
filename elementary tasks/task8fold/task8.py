@@ -12,10 +12,13 @@ Fibonacci numbers are comma separated in output and sorted by asc.
 
 import sys
 
+# const
+PHI = ((1 + (5 ** (1 / 2))) / 2)
+
 
 class Fibonacci:
     def __init__(self, start, stop):
-        if (int(stop) > int(start)):
+        if int(stop) > int(start):
             self.start = int(start)
             self.stop = int(stop)
             self.fib_seq = []
@@ -23,8 +26,7 @@ class Fibonacci:
             raise ValueError
 
     def fib(self, n):
-        phi = ((1 + (5 ** (1 / 2))) / 2)
-        return round((phi ** n) / (5 ** (1 / 2)))
+        return round((PHI ** n) / (5 ** (1 / 2)))
 
     def sequence(self):
         for n in range(self.start, self.stop + 1):

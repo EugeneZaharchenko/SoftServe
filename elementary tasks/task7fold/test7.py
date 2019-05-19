@@ -18,18 +18,14 @@ class TestNumberClass(unittest.TestCase):
     def tearDown(self):
         print('Task 7 tested')
 
-    @unittest.expectedFailure
     def test_validate(self):
         self.assertRaises(ValueError, self.num1.validate)
 
-    @unittest.expectedFailure
     def test_range(self):
         self.assertIs(self.num1.count_limit(), int)
         self.assertEqual(self.num1.count_limit(), 1)
         self.assertIs(self.num15.count_limit(), int)
         self.assertEqual(self.num15.count_limit(), 15)
-        # self.assertRaises(IndexError, self.num1.validate)
-        # self.assertRaises(IndexError, self.num1.validate)
 
     def test_instance(self):
         self.assertIsInstance(self.num1, Number)

@@ -19,35 +19,34 @@ import os.path
 
 
 class LuckyNumber:
-    def __init__(self, path, number):
-        if self.validate(number):
-            self.number = int(number)
-        self.path = path
-        self._mode = self.mode(self)
+    def __init__(self, path):
+        self._path = path
+        self.tick_store = set()
+        self._mode = self.mode_and_read()
 
     @staticmethod
     def validate(number):
-        if not str(number).isdigit() or len(number) != 6:
-            raise ValueError("A lucky number can be of 6 digits only")
-        elif float(number) == 'Inf' or float(number) == 'NaN':
-            raise ValueError
-        elif int(number) == 0:
-            return 0
-        return number
+        if len(number) != 6 or float(number) == 'Inf':
+            raise ValueError("A lucky number can be 6 digits only")
+        return int(number)
 
-    @staticmethod
-    def mode(self):
-        with open(self.path) as file:
-            for line in file:
-                _mode = line.lower()
-        if _mode in ('moskow', 'piter'):
+    def mode_and_read(self):
+
+        with open(self._path) as file:
+            lines = file.readlines()
+
+            # read frst line if file to set mode
+            _mode = lines[0].strip().lower()
+
+            [self.tick_store.add(line.strip()) for line in lines[1:]]
+        if _mode == "piter":
             return _mode
-        return 'moskow'
+        return "moskow"
 
-    def count(self, number):
-        if self._mode == 'piter':
-            odd = sum([v for v in number if int(v) % 2])
-            even = sum([v for v in number if not int(v) % 2])
+    def happy(self, number):
+        if self._mode == "piter":
+            odd = sum([int(number[v]) for v in range(len(number)) if v % 2])
+            even = sum([int(number[v]) for v in range(len(number)) if not v % 2])
             if odd == even:
                 return True
             return False
@@ -57,45 +56,36 @@ class LuckyNumber:
         if first == last:
             return True
         return False
-        # else:
-        #     for i in range(int(number), 999999):
-        #         i = str(i)
-        #         a, b = sum(map(int, i[:3])), sum(map(int, i[3:]))
-        #         if a == b:
-        #             print("Next Lucky Ticket: " + i)
-        #             break
+
+    def count(self):
+        _count = 0
+        for tick in self.tick_store:
+            if self.happy(tick):
+                _count += 1
+        return _count
 
     def __str__(self):
-        if self.count(sys.argv[1]):
-            return "Horrah! You entered {num} and you've got a lucky number!".format(num=self.number)
-        return "The number {num} you entered isn't a lucky. Maybe try again.".format(num=self.number)
+        _cnt = self.count()
+        return "In the file {path} you entered there are {num} tickets." \
+               " {cnt} are lucky with {mode} mode".format(path=self._path, num=len(self.tick_store),
+                                                          mode=self._mode, cnt=_cnt)
 
 
 def main():
     # check if the file exists
-    def file_existence(path):
-        if os.path.isfile(path):
-            return path
+    def file_existence(_path):
+        if os.path.isfile(_path):
+            return _path
         raise IOError
 
     if len(sys.argv) == 1:
         print(__doc__)
-    # elif len(sys.argv) < 3:
-    #     print('Wrong input. Enter parameters: path_to_file string_to_find')
-
-        # except AttributeError as err:
-        #     print("Incorrect file attribute. The whole error description is: {0}".format(err))
-        # else:
-        #     print(fr)
 
     while True:
-        ticket = None
         try:
             path = input('Enter file path to determine Moskow/Peter mode of lucky number: ').strip()
-            # path = 'mode.txt'
-            num = input("Please enter you number: ")
             if file_existence(path):
-                ticket = LuckyNumber(path, num)
+                ticket = LuckyNumber(path)
         except IOError:
             print("The file doesn't exist")
             continue

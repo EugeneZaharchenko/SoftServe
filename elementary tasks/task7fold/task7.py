@@ -22,21 +22,14 @@ class Number:
     def validate(self, val):
         if not str(val).isdigit():
             raise ValueError
-        else:
-            return val
+        return val
 
     def range_check(self, val):
         if float(val) == 'Inf' or int(val) < 0:
             raise IndexError
-        elif float(val) == 'NaN':
-            raise ValueError
-        else:
-            self.limit = int(val)
+        self.limit = int(val)
 
     def count_limit(self):
-        # if self.limit == 0:
-        #     return []
-        # else:
         self.numbers_list = [str(n) for n in range(self.limit) if n ** 2 < self.limit]
         return self.numbers_list
 
@@ -44,8 +37,7 @@ class Number:
         final_list = self.count_limit()
         if final_list == []:
             return "You entered {lim}. The answer is {zero}".format(lim=self.limit, zero=0)
-        else:
-            return "Sequence of numbers whose pow of 2 is less the {lim} is: {seq}".format(lim=self.limit,
+        return "Sequence of numbers whose pow of 2 is less the {lim} is: {seq}".format(lim=self.limit,
                                                                                        seq=', '.join(final_list))
 
 
@@ -57,11 +49,12 @@ def main():
     try:
         # creating instance of Number class with given arguments
         num = Number(sys.argv[1])
-        print(num)
     except (ValueError, AttributeError):
         print("Wrong argument. It must be a positive NUMBER to limit the output")
     except IndexError:
         print("Wrong argument. Input a number in reasonable range to limit the output")
+    else:
+        print(num)
 
 
 if __name__ == "__main__":

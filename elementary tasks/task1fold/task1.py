@@ -22,8 +22,8 @@ class Chess:
         height (int): The quantity of printed strings.
         width (int): The width of each printed string.
     """
-    sign = '*'
-    space = ' '
+    _sign = '*'
+    _space = ' '
 
     def __init__(self, height, width):
         self.height = int(height)
@@ -39,8 +39,8 @@ class Chess:
         Returns:
             Chess: A string formatted in special 'chess' way.
         """
-        even_row = (self.sign + self.space) * self.width
-        odd_row = self.space + even_row
+        even_row = (self._sign + self._space) * self.width
+        odd_row = self._space + even_row
 
         # using list generator to make strings which will be printed
         return "\n".join([odd_row if h % 2 else even_row for h in range(self.height)])

@@ -20,10 +20,10 @@ class Envelope:
     def __init__(self, width, height):
         if float(width) or float(height) <= 0:
             raise ValueError
-        else:
-            self.width = float(width.strip())
-            self.height = float(height.strip())
+        self.width = float(width.strip())
+        self.height = float(height.strip())
 
+    # reload class magic methods
     def __lt__(self, other):
         return (self.width < other.width) & (self.height < other.height)
 
@@ -37,31 +37,32 @@ def main():
 
     while True:
         try:
-            width1 = input('Введите ширину первого конверта: ')
-            height1 = input('Введите высоту первого конверта: ')
-            width2 = input('Введите ширину второго конверта: ')
-            height2 = input('Введите высоту второго конверта: ')
+            # receive user's data
+            width1 = input('Input a width of first envelope: ')
+            height1 = input('Input a height of first envelope: ')
+            width2 = input('Input a width of second envelope: ')
+            height2 = input('Input a height of second envelope: ')
 
             # create two instances of Envelope class with given arguments
             env1 = Envelope(width1, height1)
             env2 = Envelope(width2, height2)
 
         except IndexError:
-            print("Неверные параметры. Задайте ширину и высоту конвертов")
+            print("Wrong parameters. Please, input envelopes' width and height.")
             continue
         except ValueError:
-            print("Параметры заданы неверно. Задайте численно ширину и высоту конвертов")
+            print("Given parameters are wrong. Please, input envelopes' width and height in numbers.")
             continue
         else:
-            if env1 > env2:
-                print('Второй конверт можно вложить в первый, если второй конверт не переворачивать')
-            elif ((env1.width > env2.width) & (env1.height > env2.height)
-                & (env1.height > env2.width) & (env1.width > env2.height)):
-                print('Второй конверт можно вложить в первый в любом положении')
+            if ((env1.width > env2.width) & (env1.height > env2.height)
+                    & (env1.height > env2.width) & (env1.width > env2.height)):
+                print('The second envelope may be put to the first in any position.')
+            elif env1 > env2:
+                print('The second envelope may be put to the first, but if the second is not reversed.')
             else:
-                print('Второй конверт вложить не удастся!')
+                print('No way to put the second envelope into the first!')
         finally:
-            again = input('Хотите продолжить? (y/n): ')
+            again = input('Do you want to continue? (y/n): ')
             again.lower().strip()
             if again not in ('y', 'yes'):
                 break

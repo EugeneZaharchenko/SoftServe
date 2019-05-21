@@ -2,10 +2,10 @@ import unittest
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from task4fold.task4 import FindReplace
+from task6fold.task6 import LuckyNumber
 
 
-class TestFindReplaceClass(unittest.TestCase):
+class TestLuckyNumberClass(unittest.TestCase):
 
     def setUp(self) -> None:
         self.num1 = Number(1)
@@ -13,7 +13,7 @@ class TestFindReplaceClass(unittest.TestCase):
         # self.num5 = Number(0)
 
     def tearDown(self):
-        print('Task 4 tested')
+        print('Task 6 tested')
 
     def test_validate(self):
         self.assertRaises(ValueError, self.num1.validate)

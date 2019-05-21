@@ -2,20 +2,20 @@ import unittest
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from task4fold.task4 import FindReplace
+from task5fold.task5 import NumToWords
 
 
-class TestFindReplaceClass(unittest.TestCase):
+class TestNumToWordsClass(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.num1 = Number(1)
-        self.num15 = Number(15)
-        # self.num5 = Number(0)
+        self.num0 = NumToWords(0)
+        self.num1 = NumToWords(1)
 
-    def tearDown(self):
-        print('Task 4 tested')
+    # def tearDown(self):
+    #     print('Task 5 tested')
 
-    def test_validate(self):
+    def test_digit(self):
+        self.assertIsInstance()
         self.assertRaises(ValueError, self.num1.validate)
 
     def test_range(self):

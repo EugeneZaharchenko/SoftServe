@@ -8,9 +8,6 @@ from task7fold.task7 import Number
 class TestNumberClass(unittest.TestCase):
 
     def setUp(self) -> None:
-        # self.num1 = Number('c')
-        # self.num2 = Number(-1)
-        # self.num3 = Number("Inf")
         self.num1 = Number(1)
         self.num15 = Number(15)
         # self.num5 = Number(0)

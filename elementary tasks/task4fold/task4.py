@@ -11,8 +11,8 @@ Elementary Task #4
 Программа должна принимать аргументы на вход при запуске:
 <путь к файлу> <строка для подсчёта>
 <путь к файлу> <строка для поиска> <строка для замены>
-
 """
+
 import tempfile
 # to handle input
 import sys
@@ -22,22 +22,30 @@ import os.path
 
 class FindReplace:
     def __init__(self, path, str_find, str_replace=None):
-        if self.file_existence(path):
-            self.path = path
-            self.str_find = str_find.lower()
-            self.str_replace = str_replace
-            self._count = 0
-        else:
+        if not self.file_existence(path):
             raise AttributeError
+        self.path = path
+        self.str_find = str_find.lower()
+        self.str_replace = str_replace
+        self._count = 0
 
-    # check if the file exists
     @staticmethod
     def file_existence(path):
+        """
+        Func to check if the file exists
+        :param path: path to file -> str
+        :return: path to file -> str
+        """
         if os.path.isfile(path):
             return path
         raise IOError
 
     def count(self, find):
+        """
+        Func to count frequency of the requested string
+        :param find: string to find -> str
+        :return: frequency of requested string in the given file -> int
+        """
         _count = 0
         _find = find.lower()
         with open(self.path) as file:
@@ -45,7 +53,14 @@ class FindReplace:
                 _count += line.lower().count(_find)
         return _count
 
+    # func to replace the requested string
     def replace(self, find, rep):
+        """
+        Func to find and replace the requested string
+        :param find: string to find -> str
+        :param rep: optional string to find -> str
+        :return: None
+        """
         with open(self.path) as file:
             with tempfile.NamedTemporaryFile("w", delete=False) as tmp:
                 for line in file:
@@ -55,6 +70,7 @@ class FindReplace:
             os.remove(self.path)
             os.rename(tmp_name, self.path)
 
+    # reload class magic method
     def __str__(self):
         count = self.count(sys.argv[2])
         if self.str_replace:

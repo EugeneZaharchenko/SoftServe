@@ -1,16 +1,17 @@
 """
 Elementary Task #1
 
-Шахматная доска
+Chess-board
 ---------------
 
-Вывести шахматную доску с заданными размерами высоты и ширины, по принципу:
+To print chess-board with given height and width parameters:
 *  *  *  *  *  *
   *  *  *  *  *  *
 *  *  *  *  *  *
   *  *  *  *  *  *
-Программа запускается через вызов главного класса с параметрами.
+The program runs through main class call with parameters.
 """
+
 import sys
 
 
@@ -55,11 +56,11 @@ def main():
         return
 
     try:
+        # receive user's data
         chess_print = Chess(sys.argv[1], sys.argv[2])
         print(chess_print)
-        exit()
     except IndexError:
-        print("Неверные параметры. Задайте количество строк и их длину")
+        print("Wrong parameters. Please, input row quantity and their length")
 
 
 if __name__ == "__main__":

@@ -31,29 +31,31 @@ class Triangle:
     def __init__(self, name, side_a, side_b, side_c):
         """
         The constructor for Triangle class.
-
         Parameters:
             name (str): The triangle name.
             side_a, side_b, side_c (float): The triangle sides.
         """
-        self.name = name.strip('\t').strip(' ').lower().title()
-        self.sides = [float(s.strip('\t').strip(' ')) for s in [side_a, side_b, side_c]]
-        if not (side_a + side_b <= side_c) or (side_a + side_c <= side_b) or (side_b + side_c <= side_a):
-            self.side_a = side_a
-            self.side_b = side_b
-            self.side_c = side_c
-        else:
-            print("Such a triangle can't exist")
-
+        self.name, self.side_a, self.side_b, self.side_c = self.valid(name, side_a, side_b, side_c)
+        self.sides = [float(s) for s in [side_a, side_b, side_c]]
         self._area = 0
+
+    @staticmethod
+    def valid(name, side_a, side_b, side_c):
+        _name = name.strip('\t').strip(' ').lower().title()
+        if not (side_a + side_b <= side_c) or (side_a + side_c <= side_b) or (side_b + side_c <= side_a):
+            _side_a = side_a
+            _side_b = side_b
+            _side_c = side_c
+        else:
+            raise IndexError
+        return _name, _side_a, _side_b, _side_c
 
     @property
     def area(self):
         """
         Calculates the square of given triangle using Heron formula:
         Area = √s(s - a)(s - b)(s - c)
-
-        :return: triangle's area -> float
+        :return (float): triangle's area
         """
         p = sum(self.sides) / 2
         mult_val = 1
@@ -97,7 +99,10 @@ def main():
             print("Wrong parameters. Please enter triangle's name and values of its sides.")
             continue
         else:
-            triange_list.append(Triangle(*data))
+            try:
+                triange_list.append(Triangle(*data))
+            except IndexError:
+                print("Such a triangle can't exist")
         finally:
             repeat = input('Do you want to continue? (y/n): ')
             repeat.lower().strip()

@@ -53,7 +53,6 @@ class FindReplace:
                 _count += line.lower().count(_find)
         return _count
 
-    # func to replace the requested string
     def replace(self, find, rep):
         """
         Func to find and replace the requested string
@@ -72,9 +71,9 @@ class FindReplace:
 
     # reload class magic method
     def __str__(self):
-        count = self.count(sys.argv[2])
+        count = self.count(self.str_find)
         if self.str_replace:
-            self.replace(sys.argv[2], sys.argv[3])
+            self.replace(self.str_find, self.str_replace)
             return "String {str_find} in given file was found {count} times.\n" \
                    "Requested string was replaced for {rep}.".format(str_find=self.str_find, count=count,
                                                                      rep=self.str_replace)

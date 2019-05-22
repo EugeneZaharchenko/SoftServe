@@ -13,22 +13,23 @@ import sys
 
 class Number:
     def __init__(self, limit):
-        if self.validate(limit) and self.range_check(limit):
-            self.limit = int(limit)
+        if self.validate(limit):
+            self.limit = self.range_check(limit)
         self.numbers_list = []
 
     @staticmethod
     def validate(val):
         """
         Func to validate if the input data is correct
-        :param val (str): entered data
+        :param val: entered data ->  str
         :return: data -> str
         """
         if not str(val).isdigit():
             raise ValueError
         return val
 
-    def range_check(self, val):
+    @staticmethod
+    def range_check(val):
         """
         Func to check if the count range is correct
         :param val: max value of range -> str
@@ -36,14 +37,14 @@ class Number:
         """
         if float(val) == 'Inf' or int(val) < 0:
             raise IndexError
-        self.limit = int(val)
+        return int(val)
 
     def count_limit(self):
         """
         Func to calculate numbers which square degree is less than given limit
         :return: numbers which square degree is less than given -> list
         """
-        self.numbers_list = [str(n) for n in range(self.limit) if n ** 2 < self.limit]
+        self.numbers_list = [str(n) for n in range(1, self.limit) if n ** 2 < self.limit]
         return self.numbers_list
 
     # reload class magic method

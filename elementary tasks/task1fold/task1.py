@@ -4,7 +4,7 @@ Elementary Task #1
 Chess-board
 ---------------
 
-To print chess-board with given height and width parameters:
+The script aimed to print chess-board with given height and width parameters:
 *  *  *  *  *  *
   *  *  *  *  *  *
 *  *  *  *  *  *
@@ -18,7 +18,6 @@ import sys
 class Chess:
     """
     This is a class for printing stings in special 'chess' manner.
-
     Attributes:
         height (int): The quantity of printed strings.
         width (int): The width of each printed string.
@@ -33,10 +32,8 @@ class Chess:
     def __str__(self):
         """
         The function to print data of Chess class.
-
         Parameters:
             self (Chess): The instance of Chess class to be printed.
-
         Returns:
             Chess: A string formatted in special 'chess' way.
         """

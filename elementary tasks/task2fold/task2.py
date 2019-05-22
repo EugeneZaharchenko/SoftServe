@@ -18,10 +18,15 @@ import sys
 
 class Envelope:
     def __init__(self, width, height):
-        if float(width) or float(height) <= 0:
+        self.width, self.height = self.valid(width, height)
+
+    @staticmethod
+    def valid(width, height):
+        if not (str(width).isdigit() or str(height).isdigit()):
+            return ValueError
+        if float(width) <= 0 or float(height) <= 0:
             raise ValueError
-        self.width = float(width.strip())
-        self.height = float(height.strip())
+        return float(width), float(height)
 
     # reload class magic methods
     def __lt__(self, other):
@@ -35,6 +40,15 @@ def main():
     if len(sys.argv) == 1:
         print(__doc__)
 
+    def compare(obj1, obj2):
+        if ((obj1.width > obj2.width) & (obj1.height > obj2.height)
+                & (obj1.height > obj2.width) & (obj1.width > obj2.height)):
+            print('The second envelope may be put to the first in any position.')
+        elif obj1 > obj2:
+            print('The second envelope may be put to the first, but if the second is not reversed.')
+        else:
+            print('No way to put the second envelope into the first!')
+
     while True:
         try:
             # receive user's data
@@ -44,8 +58,8 @@ def main():
             height2 = input('Input a height of second envelope: ')
 
             # create two instances of Envelope class with given arguments
-            env1 = Envelope(width1, height1)
-            env2 = Envelope(width2, height2)
+            envelope1 = Envelope(width1, height1)
+            envelope2 = Envelope(width2, height2)
 
         except IndexError:
             print("Wrong parameters. Please, input envelopes' width and height.")
@@ -54,13 +68,7 @@ def main():
             print("Given parameters are wrong. Please, input envelopes' width and height in numbers.")
             continue
         else:
-            if ((env1.width > env2.width) & (env1.height > env2.height)
-                    & (env1.height > env2.width) & (env1.width > env2.height)):
-                print('The second envelope may be put to the first in any position.')
-            elif env1 > env2:
-                print('The second envelope may be put to the first, but if the second is not reversed.')
-            else:
-                print('No way to put the second envelope into the first!')
+            compare(envelope1, envelope2)
         finally:
             again = input('Do you want to continue? (y/n): ')
             again.lower().strip()

@@ -18,6 +18,9 @@ class Fibonacci:
         self.start, self.stop = self.validate(start, stop)
 
     @staticmethod
+#  много приведений типов в validate
+# лишние подстчеты для того что не входит в range
+# __str__
     def validate(start, stop):
         if int(stop) > 0 and int(stop) < int(start):
             raise ValueError

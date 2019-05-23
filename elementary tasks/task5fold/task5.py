@@ -25,6 +25,8 @@ THOUSANDS = ('', 'одна тысяча', 'две тысячи', 'три тыс�
 
 class NumToWords:
     def __init__(self, number, one_to_n, decs, hunds, thous):
+# передача констант в '__ini__', не нужно это делать, у тебя и так есть к ним доступ в любом месте файла
+# magic numbers )
         self.number = number
         self.units = one_to_n
         self.decs = decs

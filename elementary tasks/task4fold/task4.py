@@ -22,6 +22,7 @@ import os.path
 
 class FindReplace:
     def __init__(self, path, str_find, str_replace=None):
+# AttributeError никогда не должен будет зарайзится потому как если в методе file_existence не будет пути то уже райзится ошибка
         if not self.file_existence(path):
             raise AttributeError
         self.path = path
@@ -71,6 +72,7 @@ class FindReplace:
 
     # reload class magic method
     def __str__(self):
+# вызов интерфейсных методов в '__str__'
         count = self.count(self.str_find)
         if self.str_replace:
             self.replace(self.str_find, self.str_replace)

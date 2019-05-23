@@ -13,6 +13,9 @@ import sys
 
 class Number:
     def __init__(self, limit):
+# if self.validate(limit): не ок для метода который или возвращает валидное значение или райзит ошибку
+# (тут нужно просто self.value = self.validate(raw_value))
+# __str__ !!!
         if self.validate(limit):
             self.limit = self.range_check(limit)
         self.numbers_list = []

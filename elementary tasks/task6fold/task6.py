@@ -29,7 +29,8 @@ class LuckyNumber:
         if len(number) != 6 or float(number) == 'Inf':
             raise ValueError("A lucky number can be 6 digits only")
         return int(number)
-
+# выгрузка всех данных файла за раз
+# использование интерфейсного метода в '__str__'
     def mode_and_read(self):
         """
         Func to set Moskow|Piter mode and to read numbers

@@ -26,8 +26,13 @@ class Chess:
     _space = ' '
 
     def __init__(self, height, width):
-        self.height = int(height)
-        self.width = int(width)
+        self.height, self.width = self.valid(height, width)
+
+    @staticmethod
+    def valid(height, width):
+        if not (str(height).isnumeric() and str(width).isnumeric()):
+            return ValueError
+        return int(height), int(width)
 
     def __str__(self):
         """

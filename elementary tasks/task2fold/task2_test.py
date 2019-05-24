@@ -29,16 +29,6 @@ class TestEnvelopeClass(unittest.TestCase):
     def test_if_instance_is_less(self):
         self.assertLess(self.env2, self.env1)
 
-    # def test_compare_func(self):
-    #     env1, env2, env3 = self.env1, self.env2, self.env3
-    #     result1_2 = main().compare(env1, env2)
-    #     expected_result1_2 = print('The second envelope may be put to the first in any position.')
-    #     self.assertTrue(result1_2, expected_result1_2)
-
-    # def test_str(self):
-    #     self.assertEquals(self.num1.__str__(), 'Sequence of numbers whose pow of 2 is less the 1 is: 0')
-    #     self.assertEquals(self.num15.__str__(), 'Sequence of numbers whose pow of 2 is less the 15 is: 0, 1, 2, 3')
-    #
 
 if __name__ == "__main__":
     unittest.main()

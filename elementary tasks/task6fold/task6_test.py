@@ -1,42 +1,55 @@
 import unittest
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from task6fold.task6 import LuckyNumber
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 class TestLuckyNumberClass(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.num1 = Number(1)
-        self.num15 = Number(15)
-        # self.num5 = Number(0)
+        self.lucky_ticket = LuckyNumber("mode.txt")
 
-    def tearDown(self):
-        print('Task 6 tested')
+    def test_class_instance(self):
+        self.assertIsInstance(self.lucky_ticket, LuckyNumber)
 
-    def test_validate(self):
-        self.assertRaises(ValueError, self.num1.validate)
+    def test_class_instance_error(self):
+        with self.assertRaises(IOError):
+            self.not_lucky_ticket = LuckyNumber("No_file.txt")
 
-    def test_range(self):
-        self.assertIs(self.num1.count_limit(), int)
-        self.assertEqual(self.num1.count_limit(), 1)
-        self.assertIs(self.num15.count_limit(), int)
-        self.assertEqual(self.num15.count_limit(), 15)
+    def test_validate_func(self):
+        result = LuckyNumber.validate("654321")
+        expected = 654321
+        self.assertEqual(result, expected)
+        with self.assertRaises(ValueError):
+            self.not_valid_ticket = LuckyNumber.validate("123")
 
-    def test_instance(self):
-        self.assertIsInstance(self.num1, Number)
-        self.assertIsInstance(self.num15, Number)
+    def test_mode_and_read_func(self):
+        result = self.lucky_ticket.mode_and_read()
+        expected = "piter"
+        self.assertEqual(result, expected)
+        result1 = self.lucky_ticket.mode_and_read()
+        expected1 = "moskow"
+        self.assertNotEqual(result1, expected1)
 
-    def test_limit(self):
-        self.assertIsInstance(self.num1.count_limit(), list)
-        self.assertIsInstance(self.num15.count_limit(), list)
-        self.assertEquals(self.num1.count_limit(), ['0'])
-        self.assertEquals(self.num15.count_limit(), ['0', '1', '2', '3'])
+    def test_happy_func_piter(self):
+        result1 = self.lucky_ticket.happy("122100")
+        result2 = self.lucky_ticket.happy("150303")
+        self.assertTrue(result1)
+        self.assertFalse(result2)
 
-    def test_str(self):
-        self.assertEquals(self.num1.__str__(), 'Sequence of numbers whose pow of 2 is less the 1 is: 0')
-        self.assertEquals(self.num15.__str__(), 'Sequence of numbers whose pow of 2 is less the 15 is: 0, 1, 2, 3')
+    def test_happy_func_moskow(self):
+        self.lucky_ticket1 = LuckyNumber("mode.txt")
+        self.lucky_ticket1._mode = "moskow"
+        result1 = self.lucky_ticket1.happy("122100")
+        result2 = self.lucky_ticket1.happy("150303")
+        self.assertFalse(result1)
+        self.assertTrue(result2)
+
+    def test_count_func(self):
+        result = self.lucky_ticket.count()
+        expected = 1
+        self.assertEqual(result, expected)
 
 
 if __name__ == "__main__":

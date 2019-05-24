@@ -4,7 +4,7 @@ Elementary Task 7
 Sequence of numbers
 ----------------
 
-The program outputs a sequence of comma separated natural numbers where their square degree is less than given n.
+The program outputs a sequence of comma separated natural numbers and their square degree is less than given n.
 The program runs through call of main class with parameters.
 """
 
@@ -13,9 +13,6 @@ import sys
 
 class Number:
     def __init__(self, limit):
-# if self.validate(limit): не ок для метода который или возвращает валидное значение или райзит ошибку
-# (тут нужно просто self.value = self.validate(raw_value))
-# __str__ !!!
         if self.validate(limit):
             self.limit = self.range_check(limit)
         self.numbers_list = []
@@ -50,14 +47,6 @@ class Number:
         self.numbers_list = [str(n) for n in range(1, self.limit) if n ** 2 < self.limit]
         return self.numbers_list
 
-    # reload class magic method
-    def __str__(self):
-        final_list = self.count_limit()
-        if not final_list:
-            return "You entered {lim}. The answer is {zero}".format(lim=self.limit, zero=0)
-        return "Sequence of numbers whose pow of 2 is less the {lim} is: {seq}".format(lim=self.limit,
-                                                                                       seq=', '.join(final_list))
-
 
 def main():
     if len(sys.argv) == 1:
@@ -65,15 +54,19 @@ def main():
 
     try:
         # receive user's data
-        n = sys.argv[1]
+        given_range = sys.argv[1]
         # creating instance of Number class with given arguments
-        num = Number(n)
+        num = Number(given_range)
     except (ValueError, AttributeError):
         print("Wrong argument. It must be a positive NUMBER to limit the output")
     except IndexError:
         print("Wrong argument. Input a number in reasonable range to limit the output")
     else:
-        print(num)
+        out_sequence = num.count_limit()
+        if not out_sequence:
+            print("You entered {lim}. The answer is {zero}".format(lim=given_range, zero=0))
+        print("Sequence of numbers whose pow of 2 is less the {lim} is: {seq}".format(lim=given_range,
+                                                                                      seq=', '.join(out_sequence)))
 
 
 if __name__ == "__main__":

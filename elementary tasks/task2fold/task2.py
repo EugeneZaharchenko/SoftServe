@@ -12,7 +12,7 @@ Elementary Task #2
 Если пользователь ответит “y” или “yes” (без учёта регистра), программа продолжает работу сначала,
 в противном случае – завершает выполнение.
 """
-# слишк много приведений типов в valid, можно один раз привести к float и просто проверить
+
 import sys
 
 
@@ -22,8 +22,6 @@ class Envelope:
 
     @staticmethod
     def valid(width, height):
-        if not (str(width).isdigit() or str(height).isdigit()):
-            return ValueError
         if float(width) <= 0 or float(height) <= 0:
             raise ValueError
         return float(width), float(height)

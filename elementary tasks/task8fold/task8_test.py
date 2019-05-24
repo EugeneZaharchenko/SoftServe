@@ -1,42 +1,35 @@
 import unittest
 import sys
 import os
-from task8fold.task8 import Fibonacci
+from task8fold.task8 import Fibonacci, main
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 class TestFibonacciClass(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.fib1 = Fibonacci(0, 123)
+        self.fib1 = Fibonacci(0, 13)
         self.fib2 = Fibonacci(10, 310)
+        self.fib3 = Fibonacci(0, -12)
 
-    def test_class_instance(self):
+    def test_class_are_instances(self):
         self.assertIsInstance(self.fib1, Fibonacci)
         self.assertIsInstance(self.fib2, Fibonacci)
+        self.assertIsInstance(self.fib3, Fibonacci)
 
-    def test_validate_func_negative(self):
+    def test_validate_func_error_case(self):
         with self.assertRaises(ValueError):
-            Number.validate("NoNum")
+            Fibonacci(12, 1)
 
-    def test_range_check_func_positive(self):
-        result = Number.range_check(100)
-        expected = 100
+    def test_fib_list_func_positive(self):
+        result = self.fib1.fib_list()
+        expected = ['0', '1', '1', '2', '3', '5', '8', '13']
         self.assertTrue(result, expected)
 
-    def test_range_check_func_negative(self):
-        with self.assertRaises(IndexError):
-            Number.range_check(-10)
-
-    def test_count_limit_func(self):
-        result1 = self.num1.count_limit()
-        expected1 = ['1', '2', '3']
-        self.assertEqual(result1, expected1)
-
-    def test_str_representation(self):
-        expected = "Sequence of numbers whose pow of 2 is less the 10 is: 1, 2, 3"
-        result = self.num1.__str__()
-        self.assertEqual(result, expected)
+    def test_fib_list_func_negative(self):
+        result = self.fib3.fib_list()
+        expected = ['0', '1', '-1', '2', '-3', '5', '-8', '13']
+        self.assertTrue(result, expected)
 
 
 if __name__ == "__main__":

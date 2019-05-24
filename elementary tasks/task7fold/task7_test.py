@@ -31,11 +31,6 @@ class TestNumberClass(unittest.TestCase):
         expected1 = ['1', '2', '3']
         self.assertEqual(result1, expected1)
 
-    def test_str_representation(self):
-        expected = "Sequence of numbers whose pow of 2 is less the 10 is: 1, 2, 3"
-        result = self.num1.__str__()
-        self.assertEqual(result, expected)
-
 
 if __name__ == "__main__":
     unittest.main()

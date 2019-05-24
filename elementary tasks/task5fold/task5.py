@@ -24,39 +24,46 @@ THOUSANDS = ('', 'одна тысяча', 'две тысячи', 'три тыс�
 
 
 class NumToWords:
-    def __init__(self, number, one_to_n, decs, hunds, thous):
-# передача констант в '__ini__', не нужно это делать, у тебя и так есть к ним доступ в любом месте файла
-# magic numbers )
-        self.number = number
-        self.units = one_to_n
-        self.decs = decs
-        self.hunds = hunds
-        self.thousands = thous
+    def __init__(self, number):
+        self.number = self.validate(number)
         self.result_str = ""
 
-    def unit_convert(self, num):
+    @staticmethod
+    def validate(val):
         """
-        Func to convert units of number (0-10)
-        :param num: Number to convert to string ->
-        :return:
+        Func to validate if the input data is correct
         """
-        return self.units[num]
+        if not str(val).isdigit():
+            raise ValueError
+        return val
 
-    # to convert digits 0-19
-    def two_convert(self, num, string):
+    @staticmethod
+    def unit_convert(num):
+        """
+        Func to convert units between (0-10)
+        """
+        return ONE_TO_NINETEEN[num]
+
+    @staticmethod
+    def two_convert(num, string):
+        """
+        Func to convert digits 0-19 or tens
+        """
         if num in range(20):
-            result = self.units[num]
+            result = ONE_TO_NINETEEN[num]
 
         else:
-            result = self.decs[int(string[0])]
+            result = DECS[int(string[0])]
 
             if string[1] != '0':
-                result = '{0} {1}'.format(result, self.units[int(string[1])])
+                result = '{0} {1}'.format(result, ONE_TO_NINETEEN[int(string[1])])
 
         return result
 
-    # main convert func
     def convert(self, s_num):
+        """
+        Main convert func
+        """
         _len = len(s_num)
         _int_num = int(s_num)
 
@@ -66,7 +73,7 @@ class NumToWords:
         elif _len == 2:
             result = self.two_convert(_int_num, s_num)
         elif _len == 3:
-            result = self.hunds[int(s_num[0])]
+            result = HUNDS[int(s_num[0])]
             tail = s_num[-2:]
             if tail != '00':
                 result = '{0} {1}'.format(result, self.convert(tail))
@@ -77,7 +84,7 @@ class NumToWords:
             str_head = s_num[:-3]
             int_head = int(str_head)
             if int_head in range(1, 5):
-                head = self.thousands[int_head]
+                head = THOUSANDS[int_head]
             else:
                 head = '{0} {1}'.format(self.convert(str_head), "тысяч")
 
@@ -114,7 +121,7 @@ def main():
             if data == "0":
                 number = "zero"
             else:
-                number = NumToWords(data, ONE_TO_NINETEEN, DECS, HUNDS, THOUSANDS)
+                number = NumToWords(data)
             print("{}".format(number))
         finally:
             repeat = input('Would you like to continue? (y/n): ')

@@ -11,8 +11,8 @@ Elementary Task #4
 Программа должна принимать аргументы на вход при запуске:
 <путь к файлу> <строка для подсчёта>
 <путь к файлу> <строка для поиска> <строка для замены>
-
 """
+
 import tempfile
 # to handle input
 import sys
@@ -22,22 +22,29 @@ import os.path
 
 class FindReplace:
     def __init__(self, path, str_find, str_replace=None):
-        if self.file_existence(path):
-            self.path = path
-            self.str_find = str_find.lower()
-            self.str_replace = str_replace
-            self._count = 0
-        else:
-            raise AttributeError
+        self.path = self.file_existence(path)
+        self.path = path
+        self.str_find = str_find.lower()
+        self.str_replace = str_replace
+        self._count = 0
 
-    # check if the file exists
     @staticmethod
     def file_existence(path):
+        """
+        Func to check if the file exists
+        :param path: path to file -> str
+        :return: path to file -> str
+        """
         if os.path.isfile(path):
             return path
         raise IOError
 
     def count(self, find):
+        """
+        Func to count frequency of the requested string
+        :param find: string to find -> str
+        :return: frequency of requested string in the given file -> int
+        """
         _count = 0
         _find = find.lower()
         with open(self.path) as file:
@@ -46,6 +53,12 @@ class FindReplace:
         return _count
 
     def replace(self, find, rep):
+        """
+        Func to find and replace the requested string
+        :param find: string to find -> str
+        :param rep: optional string to find -> str
+        :return: None
+        """
         with open(self.path) as file:
             with tempfile.NamedTemporaryFile("w", delete=False) as tmp:
                 for line in file:
@@ -55,8 +68,9 @@ class FindReplace:
             os.remove(self.path)
             os.rename(tmp_name, self.path)
 
+    # reload class magic method
     def __str__(self):
-        count = self.count(sys.argv[2])
+        count = self.count(self.str_find)
         if self.str_replace:
             self.replace(sys.argv[2], sys.argv[3])
             return "String {str_find} in given file was found {count} times.\n" \
@@ -74,8 +88,6 @@ def main():
     else:
         try:
             fr = FindReplace(*sys.argv[1:])
-        except AttributeError as err:
-            print("Incorrect file attribute. The whole error description is: {0}".format(err))
         except IOError:
             print("The file doesn't exist")
         else:

@@ -1,23 +1,23 @@
 """
 Elementary Task #1
 
-Шахматная доска
+Chess-board
 ---------------
 
-Вывести шахматную доску с заданными размерами высоты и ширины, по принципу:
+The script aimed to print chess-board with given height and width parameters:
 *  *  *  *  *  *
   *  *  *  *  *  *
 *  *  *  *  *  *
   *  *  *  *  *  *
-Программа запускается через вызов главного класса с параметрами.
+The program runs through main class call with parameters.
 """
+
 import sys
 
 
 class Chess:
     """
     This is a class for printing stings in special 'chess' manner.
-
     Attributes:
         height (int): The quantity of printed strings.
         width (int): The width of each printed string.
@@ -26,16 +26,19 @@ class Chess:
     _space = ' '
 
     def __init__(self, height, width):
-        self.height = int(height)
-        self.width = int(width)
+        self.height, self.width = self.valid(height, width)
+
+    @staticmethod
+    def valid(height, width):
+        if not (str(height).isnumeric() and str(width).isnumeric()):
+            return ValueError
+        return int(height), int(width)
 
     def __str__(self):
         """
         The function to print data of Chess class.
-
         Parameters:
             self (Chess): The instance of Chess class to be printed.
-
         Returns:
             Chess: A string formatted in special 'chess' way.
         """
@@ -55,11 +58,11 @@ def main():
         return
 
     try:
+        # receive user's data
         chess_print = Chess(sys.argv[1], sys.argv[2])
         print(chess_print)
-        exit()
     except IndexError:
-        print("Неверные параметры. Задайте количество строк и их длину")
+        print("Wrong parameters. Please, input row quantity and their length")
 
 
 if __name__ == "__main__":

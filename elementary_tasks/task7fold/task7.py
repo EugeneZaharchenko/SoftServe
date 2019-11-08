@@ -19,7 +19,8 @@ class Number:
 
         self.numbers_list = []
 
-    def validate(self, val):
+    @staticmethod
+    def validate(val):
         if not str(val).isdigit():
             raise ValueError
         return val

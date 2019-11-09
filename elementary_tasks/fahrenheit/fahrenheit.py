@@ -8,15 +8,17 @@ Fahrenheit convertion
 import sys
 
 
+def fahr(t):
+    return t * 1.8 + 32
+
+
+def celc(t):
+    return (t - 32) / 1.8
+
+
 def main():
     if len(sys.argv) == 1:
         print(__doc__)
-
-    def fahr(t):
-        return t * 1.8 + 32
-
-    def celc(t):
-        return (t - 32) / 1.8
 
     while True:
         try:
@@ -31,18 +33,18 @@ def main():
             elif system == 'celc':
                 abs_zero = -273
             else:
-                print("Неверно задана система исчисления")
+                print("Неверно задана единица измерения")
 
             if float(temp) <= abs_zero:
                 raise IndexError
 
             if system == 'fahr':
-                print("{:.3f} градусов цельсия".format(celc(float(temp))))
+                print("{:.3f} градусов Цельсия".format(celc(float(temp))))
             else:
                 print("{:.3f} градусов Фаренгейта".format(fahr(float(temp))))
 
         except ValueError:
-            print("Неверные параметры. Задайте систему исчисления и численное значение температуры")
+            print("Неверные параметры. Задайте единицы измерения и численное значение температуры")
             continue
         except IndexError:
             print("Заданная температура ниже абсолютного нуля. Ничто вас не спасет!")
@@ -51,7 +53,7 @@ def main():
             again = input('Хотите продолжить? (y/n): ')
             again.lower().strip()
             if again not in ('y', 'yes'):
-                breakc
+                break
 
 
 if __name__ == "__main__":
